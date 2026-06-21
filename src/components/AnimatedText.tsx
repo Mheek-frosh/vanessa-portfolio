@@ -19,21 +19,23 @@ export default function AnimatedText({ text, className = '' }: AnimatedTextProps
   return (
     <p ref={ref} className={`relative ${className}`}>
       <span className="invisible">{text}</span>
-      {chars.map((char, index) => {
-        const progress = index / Math.max(chars.length - 1, 1)
+      <span className="absolute inset-0">
+        {chars.map((char, index) => {
+          const progress = index / Math.max(chars.length - 1, 1)
 
-        return (
-          <motion.span
-            key={`${char}-${index}`}
-            className="absolute inset-0 whitespace-pre"
-            style={{
-              opacity: useTransform(scrollYProgress, [Math.max(progress - 0.08, 0), progress], [0.2, 1]),
-            }}
-          >
-            {char}
-          </motion.span>
-        )
-      })}
+          return (
+            <motion.span
+              key={`${char}-${index}`}
+              className="whitespace-pre"
+              style={{
+                opacity: useTransform(scrollYProgress, [Math.max(progress - 0.08, 0), progress], [0.2, 1]),
+              }}
+            >
+              {char}
+            </motion.span>
+          )
+        })}
+      </span>
     </p>
   )
 }
